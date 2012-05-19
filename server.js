@@ -5,6 +5,8 @@ var express = require('express');
 var fs      = require('fs');
 var request = require('request');
 var xml2js = require('xml2js');
+var d;
+d.date = new Date(1900,1,1);
 
 //  Local cache for static content [fixed and loaded at startup]
 var zcache = { 'index.html': '' };
@@ -24,22 +26,15 @@ cwm.get('/health', function(req, res){
 });
 cwm.enable("jsonp callback");
 cwm.get('/crime', function(req, res){
-  request('http://hubmaps.cityofboston.gov/open_gov/XML/BPDCrime.xml', function (error, response, body) {
-  if (!error && response.statusCode == 200) {
-   var parser = new xml2js.Parser();
-     parser.parseString(body, function (err, result) {
-       res.json(result);
-        console.log('Done');
-    });
+  var yest = new Date();
+  yest.setDate(yest.getDate()-1);
+  if(d.date<yest){
+  getCrime(res);
+  }else{
+  res.json(d.data);
   }
-})
 });
 
-// Handler for GET /asciimo
-cwm.get('/asciimo', function(req, res){
-    var link="https://a248.e.akamai.net/assets.github.com/img/d84f00f173afcf3bc81b4fad855e39838b23d8ff/687474703a2f2f696d6775722e636f6d2f6b6d626a422e706e67";
-    res.send("<html><body><img src='" + link + "'></body></html>");
-});
 
 // Handler for GET /
 cwm.get('/', function(req, res){
@@ -79,4 +74,16 @@ cwm.listen(port, ipaddr, function() {
    console.log('%s: Node server started on %s:%d ...', Date(Date.now() ),
                ipaddr, port);
 });
-
+var getCrime = function(res){
+request('http://hubmaps.cityofboston.gov/open_gov/XML/BPDCrime.xml', function (error, response, body) {
+  if (!error && response.statusCode == 200) {
+   var parser = new xml2js.Parser();
+     parser.parseString(body, function (err, result) {
+       res.json(result);
+        console.log('Done');
+        d.data = result;
+        d.date= new Date();
+    });
+  }
+})
+}
