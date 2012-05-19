@@ -22,6 +22,18 @@ var cwm  = express.createServer();
 cwm.get('/health', function(req, res){
     res.send('1');
 });
+cwm.enable("jsonp callback");
+cwm.get('/xml', function(req, res){
+  request('http://calvinmetcalf.github.com/cwm/crime/BPDCrime.xml', function (error, response, body) {
+  if (!error && response.statusCode == 200) {
+   var parser = new xml2js.Parser();
+     parser.parseString(body, function (err, result) {
+       res.send(result);
+        console.log('Done');
+    });
+  }
+})
+});
 
 // Handler for GET /asciimo
 cwm.get('/asciimo', function(req, res){
