@@ -23,18 +23,6 @@ cwm.get('/health', function(req, res){
     res.send('1');
 });
 
-cwm.get('/xml', function(req, res){
-  request('http://calvinmetcalf.github.com/cwm/crime/BPDCrime.xml', function (error, response, body) {
-  if (!error && response.statusCode == 200) {
-   var parser = new xml2js.Parser();
-     parser.parseString(body, function (err, result) {
-       res.send(result);
-        console.log('Done');
-    });
-  }
-})
-});
-
 // Handler for GET /asciimo
 cwm.get('/asciimo', function(req, res){
     var link="https://a248.e.akamai.net/assets.github.com/img/d84f00f173afcf3bc81b4fad855e39838b23d8ff/687474703a2f2f696d6775722e636f6d2f6b6d626a422e706e67";
