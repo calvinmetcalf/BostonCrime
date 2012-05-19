@@ -5,7 +5,7 @@ var express = require('express');
 var fs      = require('fs');
 var request = require('request');
 var xml2js = require('xml2js');
-var d;
+var d = [];
 d.date = new Date(1900,1,1);
 
 //  Local cache for static content [fixed and loaded at startup]
