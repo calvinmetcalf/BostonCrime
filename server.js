@@ -23,7 +23,7 @@ cwm.get('/health', function(req, res){
     res.send('1');
 });
 cwm.enable("jsonp callback");
-cwm.get('/xml', function(req, res){
+cwm.get('/crime', function(req, res){
   request('http://calvinmetcalf.github.com/cwm/crime/BPDCrime.xml', function (error, response, body) {
   if (!error && response.statusCode == 200) {
    var parser = new xml2js.Parser();
