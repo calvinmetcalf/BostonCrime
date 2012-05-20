@@ -36,27 +36,13 @@ $(function() {
     });
 getStuff(oURL);
  $('.datepicker').change(function(){
-     var now = new Date();
- var datef = $('#from').val().split("/");
-  var datet = $('#to').val().split("/");
-  if (datef.length==1){
-   datef = ["01","01","1900"];
-  }
-   if (datet.length==1){
-   datet = [now.getMonth()+1,now.getDate(),now.getFullYear()];
-  }
- var from = new Date(parseInt(datef[2]),parseInt(datef[0])-1,parseInt(datef[1]));
-  var to = new Date(parseInt(datet[2]),parseInt(datet[0])-1,parseInt(datet[1]));
- $.each(d,function(i,s){
-     if((s.dd<from)||(s.dd>to)){
-      s.marker.setMap(null);   
-     }
-     if((s.dd>from)&&(s.dd<to)){
-      s.marker.setMap(m);   
-     }
- });
+ 
+ changeStuff();
+    
 });
-
+$("select").change(function(){
+changeStuff();
+});
 $('#geocode').click(function(){
     geocoder.geocode( { 'address': $("#address").val()}, function(results, status) {
       if (status == g.GeocoderStatus.OK) {
@@ -83,6 +69,7 @@ geocoder.marker.setMap(null);
 
 var doStuff =  function(data){
     d = data.INCIDENT;
+    var types = [];
     $.each(d,function(i,s){
           var x = s.X;
           var y = s.Y;
@@ -92,7 +79,9 @@ var doStuff =  function(data){
           var ta = s.FROMDATE.split("-");
           var tb = ta[2].split('T');
           var tc = tb[1].split(":");
-        
+        if($.inArray(ccd,types)==-1){
+        types.push(ccd);
+    }
            s.dd = new Date(parseInt(ta[0]), parseInt(ta[1])-1,parseInt(tb[0]),parseInt(tc[0]),parseInt(tc[1]),parseInt(tc[2]));
         var icon  = new g.MarkerImage("http://xdr-cwm.rhcloud.com/smallgreen.png");
           
@@ -112,7 +101,9 @@ var doStuff =  function(data){
      
       
     });
-          
+      $.each(types,function(i,t){
+    $('.crimeType').append("<option value='" + t + "'>" + t + "</option>");
+} );   
      
 };
 
@@ -123,6 +114,30 @@ function(data){
     
     doStuff(data);
 }, 'JSONP');   
+}
+
+var changeStuff = function(url){
+ var now = new Date();
+  var t = $('.crimeType').val(); 
+ var datef = $('#from').val().split("/");
+  var datet = $('#to').val().split("/");
+  if (datef.length==1){
+   datef = ["01","01","1900"];
+  }
+   if (datet.length==1){
+   datet = [now.getMonth()+1,now.getDate(),now.getFullYear()];
+  }
+ var from = new Date(parseInt(datef[2]),parseInt(datef[0])-1,parseInt(datef[1]));
+  var to = new Date(parseInt(datet[2]),parseInt(datet[0])-1,parseInt(datet[1]));
+ $.each(d,function(i,s){
+     if((s.dd>from)&&(s.dd<to)&&((t=='all')||(t==s.CRIMECODE_DESC))){
+      s.marker.setMap(m);   
+     }else{
+      s.marker.setMap(null);   
+     }
+    
+ });
+
 }
 
 function LCC(params){
