@@ -56,7 +56,7 @@ cwm.get('/map.css', function(req, res){
 cwm.get('/smallgreen.png', function(req, res){
     res.send(zcache['smallgreen.png'], {'Content-Type': 'image/png'});
 cwm.get('/favicon.ico', function(req, res){
-    res.send(zcache['favicon.ico'], {'Content-Type': 'image/vnd.microsoft.icon'});
+    res.send(zcache['favicon.ico'], {'Content-Type': 'image/x-icon'});
 });
 
 //  Get the environment variables we need.
