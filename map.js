@@ -89,7 +89,6 @@ var doStuff =  function(data){
           var ccd = s.CRIMECODE_DESC;
          var fccd = s.FINALCRIMECODEDESC; 
           var stb = s.STREETNAME; 
-          var time = s.FROMDATE;
           var ta = s.FROMDATE.split("-");
           var tb = ta[2].split('T');
           var tc = tb[1].split(":");
@@ -100,7 +99,7 @@ var doStuff =  function(data){
           
       
         var latlng = bosFT.inverse([x,y]);
-       var content = 'Crime Type: ' + ccd + '<br/>Final Crime Type: ' + fccd + '<br/>Location ' + stb + '<br/>When: ' + time;
+       var content = 'Crime Type: ' + ccd + '<br/>Final Crime Type: ' + fccd + '<br/>Location ' + stb + '<br/>When: ' + s.dd;
           s.marker = new g.Marker({position: new g.LatLng(latlng[1],latlng[0]),title:fccd,icon:icon});
         //   s.marker = new g.Mathisrker({position: new g.LatLng(lat,lng),title:permit,icon:icon});
          s.marker.setMap(m)
