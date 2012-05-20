@@ -16,7 +16,7 @@ zcache['map.css'] = fs.readFileSync('./map.css');
 zcache['smallgreen.png'] = fs.readFileSync('./smallgreen.png');
 // Create "express" server.
 var cwm  = express.createServer();
-
+cwm.use(express.favicon());
 
 /*  =====================================================================  */
 /*  Setup route handlers.  */
