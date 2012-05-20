@@ -94,14 +94,14 @@ var doStuff =  function(data){
           var tc = tb[1].split(":");
         
            s.dd = new Date(parseInt(ta[0]), parseInt(ta[1])-1,parseInt(tb[0]),parseInt(tc[0]),parseInt(tc[1]),parseInt(tc[2]));
-        var icon  = new g.MarkerImage("http://calvinmetcalf.github.com/oa/img/smallgreen.png");
+        var icon  = new g.MarkerImage("http://xdr-cwm.rhcloud.com/smallgreen.png");
           
           
       
         var latlng = bosFT.inverse([x,y]);
        var content = 'Crime Type: ' + ccd + '<br/>Final Crime Type: ' + fccd + '<br/>Location ' + stb + '<br/>When: ' + s.dd;
           s.marker = new g.Marker({position: new g.LatLng(latlng[1],latlng[0]),title:fccd,icon:icon});
-        //   s.marker = new g.Mathisrker({position: new g.LatLng(lat,lng),title:permit,icon:icon});
+        
          s.marker.setMap(m)
         g.event.addListener(s.marker, 'click',
                 			function()
@@ -110,10 +110,10 @@ var doStuff =  function(data){
                               infowindow.open(m,s.marker);
 							});
      
-      // a.push(marker);
+      
     });
           
-      //  c.addMarkers(a);
+     
 };
 
 

@@ -9,10 +9,11 @@ var d = [];
 d.date = new Date(1900,1,1);
 
 //  Local cache for static content [fixed and loaded at startup]
-var zcache = { 'index.html': '','map.js':'','map.css':'' };
+var zcache = { 'index.html': '','map.js':'','map.css':'','smallgreen.png':''};
 zcache['index.html'] = fs.readFileSync('./index.html'); 
 zcache['map.js'] = fs.readFileSync('./map.js'); 
 zcache['map.css'] = fs.readFileSync('./map.css'); 
+zcache['smallgreen.png'] = fs.readFileSync('./smallgreen.png');
 // Create "express" server.
 var cwm  = express.createServer();
 
@@ -50,6 +51,9 @@ cwm.get('/map.js', function(req, res){
 
 cwm.get('/map.css', function(req, res){
     res.send(zcache['map.css'], {'Content-Type': 'text/css'});
+});
+cwm.get('/smallgreen.png', function(req, res){
+    res.send(zcache['smallgreen.png'], {'Content-Type': 'image/png'});
 });
 
 //  Get the environment variables we need.
