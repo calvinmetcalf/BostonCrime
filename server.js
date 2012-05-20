@@ -9,9 +9,10 @@ var d = [];
 d.date = new Date(1900,1,1);
 
 //  Local cache for static content [fixed and loaded at startup]
-var zcache = { 'index.html': '' };
-zcache['index.html'] = fs.readFileSync('./index.html'); //  Cache index.html
-
+var zcache = { 'index.html': '','map.js':'','map.css':'' };
+zcache['index.html'] = fs.readFileSync('./index.html'); 
+zcache['map.js'] = fs.readFileSync('./map.js'); 
+zcache['map.css'] = fs.readFileSync('./map.css'); 
 // Create "express" server.
 var cwm  = express.createServer();
 
@@ -23,6 +24,9 @@ var cwm  = express.createServer();
 // Handler for GET /health
 cwm.get('/health', function(req, res){
     res.send('1');
+});
+cwm.get('/date', function(req, res){
+    res.send(d.date);
 });
 cwm.enable("jsonp callback");
 cwm.get('/crime', function(req, res){
@@ -40,7 +44,13 @@ cwm.get('/crime', function(req, res){
 cwm.get('/', function(req, res){
     res.send(zcache['index.html'], {'Content-Type': 'text/html'});
 });
+cwm.get('/map.js', function(req, res){
+    res.send(zcache['map.js'], {'Content-Type': 'application/javascript'});
+});
 
+cwm.get('/map.css', function(req, res){
+    res.send(zcache['map.css'], {'Content-Type': 'text/css'});
+});
 
 //  Get the environment variables we need.
 var ipaddr  = process.env.OPENSHIFT_INTERNAL_IP;

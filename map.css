@@ -1,0 +1,10 @@
+html { height: 100% }
+  body { height: 100%; margin: 0; padding: 0;font-family: Verdana,Arial,sans-serif;font-size: .9em; }
+  #map{ height: 100%;width: 100%; }
+   #tabs{position:absolute;
+  z-index:10;
+  margin-left:75px;
+  margin-top:5px;
+  padding:0;
+  font-size:12px;}
+  .ui-autocomplete { height: 200px; overflow-y: scroll; overflow-x: hidden;}
