@@ -27,7 +27,11 @@ $(function() {
             collapsible: true,
             selected: -1
 		});
-        $( ".datepicker" ).datepicker();
+        $( ".datepicker" ).datepicker({
+    		showButtonPanel: true,
+            changeMonth: true,
+    		changeYear: true
+		});
          $('input, textarea').placeholder();
   m = new g.Map(document.getElementById('map'), {
       center: center,
@@ -71,6 +75,7 @@ var doStuff =  function(data){
     d = data.INCIDENT;
     var types = [];
     var beats = [];
+    var early = new Date();
     $.each(d,function(i,s){
           var x = s.X;
           var y = s.Y;
@@ -87,6 +92,9 @@ var doStuff =  function(data){
         beats.push(s.GBEAT);
     }
            s.dd = new Date(parseInt(ta[0]), parseInt(ta[1])-1,parseInt(tb[0]),parseInt(tc[0]),parseInt(tc[1]),parseInt(tc[2]));
+           if(early>s.dd){
+               early=s.dd;
+           }
         var icon  = new g.MarkerImage("http://xdr-cwm.rhcloud.com/smallgreen.png");
           
           
@@ -110,7 +118,10 @@ var doStuff =  function(data){
 } );   
       $.each(beats,function(i,t){
     $('.beat').append("<option value='" + t + "'>" + t + "</option>");
-} );   
+} ); 
+$('#from').datepicker( "setDate" , early);
+var now = new Date();
+$('#to').datepicker( "setDate" , now);
 };
 
 
