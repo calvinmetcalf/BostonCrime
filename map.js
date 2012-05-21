@@ -28,7 +28,7 @@ $(function() {
             selected: -1
 		});
         $( ".datepicker" ).datepicker({
-    		showButtonPanel: true,
+    		
             changeMonth: true,
     		changeYear: true
 		});
