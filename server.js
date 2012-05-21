@@ -32,7 +32,7 @@ cwm.get('/date', function(req, res){
 cwm.enable("jsonp callback");
 cwm.get('/crime', function(req, res){
   var yest = new Date();
-  yest.setDate(yest.getDate()-1);
+  yest.setHours(yest.getHours()-1);
   if(d.date<yest){
   getCrime(res);
   }else{
