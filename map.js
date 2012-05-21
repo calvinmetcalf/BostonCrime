@@ -70,6 +70,7 @@ geocoder.marker.setMap(null);
 var doStuff =  function(data){
     d = data.INCIDENT;
     var types = [];
+    var beats = [];
     $.each(d,function(i,s){
           var x = s.X;
           var y = s.Y;
@@ -82,13 +83,16 @@ var doStuff =  function(data){
         if($.inArray(ccd,types)==-1){
         types.push(ccd);
     }
+     if($.inArray(s.GBEAT,beats)==-1){
+        beats.push(s.GBEAT);
+    }
            s.dd = new Date(parseInt(ta[0]), parseInt(ta[1])-1,parseInt(tb[0]),parseInt(tc[0]),parseInt(tc[1]),parseInt(tc[2]));
         var icon  = new g.MarkerImage("http://xdr-cwm.rhcloud.com/smallgreen.png");
           
           
       
         var latlng = bosFT.inverse([x,y]);
-       var content = 'Crime Type: ' + ccd + '<br/>Final Crime Type: ' + fccd + '<br/>Location ' + stb + '<br/>When: ' + s.dd;
+       var content = 'Crime Type: ' + ccd + '<br/>Final Crime Type: ' + fccd + '<br/>Location ' + stb + '<br/>When: ' + s.dd + '<br/>Beat: ' + s.GBEAT;
           s.marker = new g.Marker({position: new g.LatLng(latlng[1],latlng[0]),title:fccd,icon:icon});
         
          s.marker.setMap(m)
@@ -104,7 +108,9 @@ var doStuff =  function(data){
       $.each(types,function(i,t){
     $('.crimeType').append("<option value='" + t + "'>" + t + "</option>");
 } );   
-     
+      $.each(beats,function(i,t){
+    $('.beat').append("<option value='" + t + "'>" + t + "</option>");
+} );   
 };
 
 
@@ -119,6 +125,7 @@ function(data){
 var changeStuff = function(url){
  var now = new Date();
   var t = $('.crimeType').val(); 
+  var bt = $('.beat').val(); 
  var datef = $('#from').val().split("/");
   var datet = $('#to').val().split("/");
   if (datef.length==1){
@@ -130,7 +137,7 @@ var changeStuff = function(url){
  var from = new Date(parseInt(datef[2]),parseInt(datef[0])-1,parseInt(datef[1]));
   var to = new Date(parseInt(datet[2]),parseInt(datet[0])-1,parseInt(datet[1]));
  $.each(d,function(i,s){
-     if((s.dd>from)&&(s.dd<to)&&((t=='all')||(t==s.CRIMECODE_DESC))){
+     if((s.dd>from)&&(s.dd<to)&&((t=='all')||(t==s.CRIMECODE_DESC))&&((bt=='all')||(bt==s.GBEAT))){
       s.marker.setMap(m);   
      }else{
       s.marker.setMap(null);   
@@ -335,3 +342,4 @@ function LCC(params){
 
 
                         
+
